@@ -1287,6 +1287,9 @@ p { line-height: 1.65; }
   display: flex;
   flex-direction: column;
   margin-bottom: 18px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .form-field label {
@@ -1309,7 +1312,15 @@ p { line-height: 1.65; }
   border-radius: var(--radius);
   color: var(--body-text);
   outline: none;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-field textarea {
+  resize: vertical;
 }
 
 .form-field input:focus,
@@ -1323,6 +1334,9 @@ p { line-height: 1.65; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .product-radio-group {
@@ -1508,13 +1522,29 @@ p { line-height: 1.65; }
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.contact-info-panel,
+.contact-form-panel {
+  background: var(--white);
+  padding: 44px 38px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-info-panel {
-  background: var(--white);
-  padding: 44px 38px;
   display: flex;
   flex-direction: column;
+}
+
+.contact-form-panel form {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .contact-info-panel h3 {
@@ -1566,11 +1596,6 @@ p { line-height: 1.65; }
 
 a.contact-detail-val:hover {
   color: var(--teal);
-}
-
-.contact-form-panel {
-  background: var(--white);
-  padding: 44px 38px;
 }
 
 .contact-success {
@@ -1758,6 +1783,7 @@ a.contact-detail-val:hover {
   .faq-grid-frame, .faq-cols { grid-template-columns: 1fr; }
 
   .contact-grid-frame, .contact-split { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
 
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .footer-brand { grid-column: span 2; }
@@ -1877,7 +1903,7 @@ a.contact-detail-val:hover {
   .product-grid-logo { height: 42px; max-width: 170px; }
   .product-grid-price { font-size: 1.75rem; }
 
-  .contact-info-panel, .contact-form-panel { padding: 32px 22px; }
+  .contact-info-panel, .contact-form-panel { padding: 28px 18px; }
 
   .footer-bottom-links { flex-wrap: wrap; gap: 14px; }
 }
@@ -1896,4 +1922,5 @@ a.contact-detail-val:hover {
   .partner-logo--aws { height: 24px; }
   .partner-logo--vercel { height: 20px; }
   .hero h1 { font-size: 1.75rem; }
+  .contact-info-panel, .contact-form-panel { padding: 22px 14px; }
 }
