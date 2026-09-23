@@ -1,0 +1,15 @@
+<svg viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Supabase Icon -->
+  <g transform="translate(4, 5)">
+    <path d="M17.8 0c-.8 0-1.5.5-1.8 1.2L7.3 22.8c-.3.8.3 1.6 1.1 1.6h10.4l-3.2 13.9c-.3 1.2 1.2 2 2 .9l14.1-19.3c.6-.8 0-2-.9-2H19.7l4.5-16.1c.3-1-.5-1.8-1.5-1.8h-4.9z" fill="url(#sb-grad)"/>
+    <path d="M19.7 17.9h11.1c1 0 1.5 1.2.9 2L17.6 39.2c-.8 1.1-2.3.3-2-.9l3.2-13.9H8.4c-.8 0-1.4-.8-1.1-1.6L16 1.2c.3-.7 1-1.2 1.8-1.2h4.9c1 0 1.8.8 1.5 1.8L19.7 17.9z" fill="#3ECF8E" fill-opacity="0.2"/>
+  </g>
+  <!-- Supabase Wordmark -->
+  <text x="44" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.5px" fill="#132B40">supabase</text>
+  <defs>
+    <linearGradient id="sb-grad" x1="10" y1="2" x2="28" y2="38" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3ECF8E"/>
+      <stop offset="1" stop-color="#24B47E"/>
+    </linearGradient>
+  </defs>
+</svg>

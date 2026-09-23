@@ -1,0 +1,13 @@
+<svg viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Google G Logo -->
+  <g transform="translate(6, 6)">
+    <path d="M26.5 14.3c0-.9-.1-1.8-.3-2.6H14v5h7.1c-.3 1.7-1.2 3.1-2.6 4.1v3.4h4.2c2.5-2.3 3.8-5.7 3.8-9.9z" fill="#4285F4"/>
+    <path d="M14 27c3.6 0 6.6-1.2 8.7-3.2l-4.2-3.4c-1.2.8-2.7 1.3-4.5 1.3-3.5 0-6.4-2.3-7.5-5.5H2.2v3.5C4.4 24 8.9 27 14 27z" fill="#34A853"/>
+    <path d="M6.5 16.2c-.3-.8-.5-1.7-.5-2.7s.2-1.9.5-2.7V7.3H2.2C1.3 9.1.8 11.2.8 13.5s.5 4.4 1.4 6.2l4.3-3.5z" fill="#FBBC05"/>
+    <path d="M14 5.7c2 0 3.7.7 5.1 2l3.8-3.8C20.6 1.8 17.6.7 14 .7 8.9.7 4.4 3.7 2.2 8.1l4.3 3.5c1.1-3.2 4-5.9 7.5-5.9z" fill="#EA4335"/>
+  </g>
+  <!-- Google for Startups Text -->
+  <text x="44" y="21" font-family="'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="600" fill="#132B40" letter-spacing="-0.2px">Google</text>
+  <text x="100" y="21" font-family="'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="400" fill="#526A80">for Startups</text>
+  <text x="44" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="600" fill="#8198AB" letter-spacing="0.08em" text-transform="uppercase">Cloud Program Partner</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Twilio Icon (Red circle with 4 dots) -->
+  <g transform="translate(6, 6)">
+    <circle cx="14" cy="14" r="14" fill="#F22F46"/>
+    <circle cx="9.5" cy="9.5" r="2.8" fill="#FFFFFF"/>
+    <circle cx="18.5" cy="9.5" r="2.8" fill="#FFFFFF"/>
+    <circle cx="9.5" cy="18.5" r="2.8" fill="#FFFFFF"/>
+    <circle cx="18.5" cy="18.5" r="2.8" fill="#FFFFFF"/>
+  </g>
+  <!-- Twilio Wordmark -->
+  <text x="44" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.5px" fill="#132B40">twilio</text>
+</svg>
