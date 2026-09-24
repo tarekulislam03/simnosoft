@@ -166,7 +166,9 @@
     });
   }
 
-    var contactForm    = document.getElementById('contact-form');
+  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxct-MHARhNebNtI5AMk8D0mp4E7OSHhIrZvz0qDptDkjw2ohumnSlE-pSV-68Bbkk/exec';
+
+  var contactForm    = document.getElementById('contact-form');
   var contactSuccess = document.getElementById('contact-success');
 
   if (contactForm && contactSuccess) {
@@ -180,6 +182,7 @@
       var nameField    = contactForm.querySelector('#contact-name');
       var emailField   = contactForm.querySelector('#contact-email');
       var messageField = contactForm.querySelector('#contact-message');
+      var topicField   = contactForm.querySelector('#contact-topic');
       var firstBad     = null;
 
       [nameField, emailField, messageField].forEach(function (f) {
@@ -201,11 +204,32 @@
       var btn = contactForm.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-      setTimeout(function () {
+      if (GOOGLE_SCRIPT_URL) {
+        var formData = new FormData(contactForm);
+        formData.append('timestamp', new Date().toLocaleString());
+        formData.append('sheet_name', 'Sheet2');
+        formData.append('source', 'Simnosoft Contact Form');
+
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors'
+        })
+        .then(function () {
+          contactForm.hidden = true;
+          contactSuccess.hidden = false;
+          contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        })
+        .catch(function () {
+          contactForm.hidden = true;
+          contactSuccess.hidden = false;
+          contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      } else {
         contactForm.hidden = true;
         contactSuccess.hidden = false;
         contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 350);
+      }
     });
   }
 
@@ -218,4 +242,66 @@
     });
   });
 
+  /* --------------------------------------------------------------------------
+     Fieldhand Early Access Modal (Triggers after 3 seconds)
+     -------------------------------------------------------------------------- */
+  var eaPopup = document.getElementById('fieldhand-popup');
+  var eaPopupClose = document.getElementById('popup-close-btn');
+  var eaPopupBackdrop = document.getElementById('popup-backdrop');
+  var eaPopupDismiss = document.getElementById('popup-dismiss-link');
+
+  if (eaPopup) {
+    function openEaPopup() {
+      eaPopup.classList.add('is-visible');
+      eaPopup.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEaPopup() {
+      eaPopup.classList.remove('is-visible');
+      eaPopup.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Expose globally for quick testing or manual opening if needed
+    window.openFieldhandModal = openEaPopup;
+    window.closeFieldhandModal = closeEaPopup;
+
+    // Clear any previous session suppression
+    try {
+      sessionStorage.removeItem('fieldhand_popup_dismissed');
+      sessionStorage.removeItem('simnosoft_fieldhand_popup_closed');
+    } catch (e) {}
+
+    // Trigger modal after 3 seconds (3000ms)
+    setTimeout(openEaPopup, 3000);
+
+    if (eaPopupClose) {
+      eaPopupClose.addEventListener('click', function (e) {
+        e.preventDefault();
+        closeEaPopup();
+      });
+    }
+
+    if (eaPopupBackdrop) {
+      eaPopupBackdrop.addEventListener('click', function () {
+        closeEaPopup();
+      });
+    }
+
+    if (eaPopupDismiss) {
+      eaPopupDismiss.addEventListener('click', function (e) {
+        e.preventDefault();
+        closeEaPopup();
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && eaPopup.classList.contains('is-visible')) {
+        closeEaPopup();
+      }
+    });
+  }
+
 })();
+

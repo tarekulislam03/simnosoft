@@ -59,7 +59,7 @@
         </p>
         <div class="hero-actions">
           <a href="#products" class="btn btn--primary btn--lg">Explore Our Products</a>
-          <a href="#early-access" class="btn btn--ghost-light btn--lg">Reach Out To Us</a>
+          <a href="#contact" class="btn btn--ghost-light btn--lg">Reach Out To Us</a>
         </div>
 
       </div>
@@ -102,7 +102,7 @@
             Exact real-time visibility into bin-level counts, mobile barcode picking, and automated supplier reorders to replace spreadsheets and missed stockouts.
           </p>
           <div class="product-grid-action">
-            <a href="#early-access" class="btn btn--inventorii btn--block" data-product="inventorii">Reserve Inventorii — Early Access</a>
+            <a href="#early-access" class="btn btn--inventorii btn--block" data-product="inventorii">Will be available soon!</a>
           </div>
         </div>
 
@@ -353,6 +353,41 @@
       </div>
     </div>
   </footer>
+
+  <!-- Fieldhand Early Access Modal Pop-up (Center) -->
+  <div class="ea-modal-overlay" id="fieldhand-popup" role="dialog" aria-modal="true" aria-labelledby="popup-title" aria-describedby="popup-desc" aria-hidden="true">
+    <div class="ea-modal-backdrop" id="popup-backdrop"></div>
+    <div class="ea-modal-card">
+      <button type="button" class="ea-modal-close" id="popup-close-btn" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="ea-modal-gold-bar"></div>
+
+      <div class="ea-modal-body">
+        <div class="product-grid-top ea-modal-top-row">
+          <img src="assets/fieldhand_logo.png" alt="Fieldhand Logo" class="product-grid-logo" />
+          <div class="product-grid-price">
+            <span class="ea-old-price">$49</span>
+            $39<span class="product-grid-cycle">/month</span>
+          </div>
+        </div>
+
+        <p class="product-grid-tagline" id="popup-title">Pest control &amp; 1–5 truck field service management</p>
+        
+        <p class="product-grid-desc" id="popup-desc">
+          Handles the essential workflows that eat up operator time every single day — from scheduling jobs on recurring accounts to instant card &amp; ACH mobile invoicing. Reserve early access today and get a <strong>flat 20% lifetime discount</strong> on your subscription.
+        </p>
+
+        <div class="product-grid-action">
+          <a href="https://fieldhand-xi.vercel.app" class="btn btn--navy btn--block" target="_blank" rel="noopener noreferrer">Reserve Fieldhand — Early Access</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

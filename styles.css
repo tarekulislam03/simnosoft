@@ -225,8 +225,8 @@ p { line-height: 1.65; }
 .section--navy { background: var(--navy); }
 .section--navy-dark { background: var(--navy-dark); }
 .section--teal { background: var(--teal); }
-.section--bordered-t { border-top: 1px solid var(--border); }
-.section--bordered-b { border-bottom: 1px solid var(--border); }
+.section--bordered-t { border-top: none; }
+.section--bordered-b { border-bottom: none; }
 
 .divider {
   width: 48px;
@@ -602,7 +602,7 @@ p { line-height: 1.65; }
 .partners-section {
   padding: 68px 0 76px;
   background: var(--white);
-  border-top: 1px solid var(--border);
+  border-top: none;
 }
 
 .partners-header {
@@ -1308,7 +1308,7 @@ p { line-height: 1.65; }
   font-size: 0.95rem;
   padding: 12px 14px;
   background: var(--white);
-  border: 1px solid var(--border);
+  border: 2px solid var(--navy);
   border-radius: var(--radius);
   color: var(--body-text);
   outline: none;
@@ -1924,3 +1924,241 @@ a.contact-detail-val:hover {
   .hero h1 { font-size: 1.75rem; }
   .contact-info-panel, .contact-form-panel { padding: 22px 14px; }
 }
+
+/* ==========================================================================
+   Fieldhand Early Access Modal Pop-up (Section-matched simple UI)
+   ========================================================================== */
+.ea-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.ea-modal-overlay.is-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.ea-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 40, 67, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.ea-modal-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--white);
+  border: 2px solid #122843;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 50px rgba(18, 40, 67, 0.22);
+  transform: scale(0.95) translateY(12px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ea-modal-overlay.is-visible .ea-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.ea-modal-gold-bar {
+  height: 4px;
+  background: #F0C040;
+  width: 100%;
+}
+
+.ea-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: #8893A1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  z-index: 2;
+}
+
+.ea-modal-close:hover {
+  background: #F4F9FD;
+  color: #122843;
+  border-color: var(--border);
+}
+
+.ea-modal-body {
+  padding: 30px 32px 34px;
+}
+
+.ea-modal-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-right: 28px;
+  gap: 12px;
+}
+
+.ea-modal-top-row .product-grid-logo {
+  height: 44px;
+  max-width: 180px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 1;
+}
+
+.ea-modal-top-row .product-grid-price {
+  font-family: var(--font-head);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #122843;
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ea-old-price {
+  font-size: 1.15rem;
+  color: #8893A1;
+  text-decoration: line-through;
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .ea-modal-overlay {
+    padding: 12px;
+  }
+
+  .ea-modal-card {
+    max-height: calc(100vh - 24px);
+  }
+
+  .ea-modal-body {
+    padding: 22px 18px 22px;
+  }
+
+  .ea-modal-close {
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .ea-modal-top-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 24px;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .ea-modal-top-row .product-grid-logo {
+    height: 32px;
+    max-width: 130px;
+  }
+
+  .ea-modal-top-row .product-grid-price {
+    font-size: 1.55rem;
+  }
+
+  .ea-old-price {
+    font-size: 0.92rem;
+    margin-right: 4px;
+  }
+
+  .ea-modal-top-row .product-grid-cycle {
+    font-size: 0.78rem;
+  }
+
+  .ea-modal-card .product-grid-tagline {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+
+  .ea-modal-card .product-grid-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  .ea-modal-card .product-grid-action .btn {
+    padding: 13px 16px;
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .ea-modal-body {
+    padding: 20px 14px 20px;
+  }
+
+  .ea-modal-top-row {
+    padding-right: 20px;
+    gap: 6px;
+  }
+
+  .ea-modal-top-row .product-grid-logo {
+    height: 26px;
+    max-width: 105px;
+  }
+
+  .ea-modal-top-row .product-grid-price {
+    font-size: 1.32rem;
+  }
+
+  .ea-old-price {
+    font-size: 0.82rem;
+    margin-right: 3px;
+  }
+
+  .ea-modal-top-row .product-grid-cycle {
+    font-size: 0.72rem;
+  }
+
+  .ea-modal-card .product-grid-tagline {
+    font-size: 1.05rem;
+  }
+
+  .ea-modal-card .product-grid-desc {
+    font-size: 0.84rem;
+  }
+}
+
+
+
+
