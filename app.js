@@ -1,307 +1,148 @@
-(function () {
-  'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('flexiForm_wSR13');
+  const submitBtn = document.getElementById('ipspw');
+  const successMsg = document.getElementById('audit-success');
 
-    var header = document.getElementById('site-header');
+  // country dropdown
+  const selectedFlag = document.querySelector('.iti__selected-flag');
+  const countryList = document.querySelector('#iti-0__country-listbox');
+  const phoneInput = document.querySelector('#iuw4j');
 
-  window.addEventListener('scroll', function () {
-    if (!header) return;
-    if (window.scrollY > 8) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+  if (selectedFlag && countryList) {
+    if (window.COUNTRIES_DATA && countryList.children.length === 0) {
+      let html = '';
+      let hasDivider = false;
+      window.COUNTRIES_DATA.forEach(function (c) {
+        if (!c.p && !hasDivider) {
+          html += '<li class="iti__divider" role="separator" aria-disabled="true"></li>';
+          hasDivider = true;
+        }
+        const prefClass = c.p ? 'iti__preferred' : 'iti__standard';
+        const activeClass = c.c === 'in' ? ' iti__active' : '';
+        const selected = c.c === 'in' ? 'true' : 'false';
+        html += '<li class="iti__country ' + prefClass + activeClass + '" tabindex="-1" id="iti-0__item-' + c.c + '" role="option" data-dial-code="' + c.d + '" data-country-code="' + c.c + '" aria-selected="' + selected + '">' +
+          '<div class="iti__flag-box"><div class="iti__flag iti__' + c.c + '"></div></div>' +
+          '<span class="iti__country-name">' + c.n + '</span>' +
+          '<span class="iti__dial-code">+' + c.d + '</span>' +
+        '</li>';
+      });
+      countryList.innerHTML = html;
     }
-  }, { passive: true });
 
-    var toggle = document.getElementById('nav-toggle');
+    let currentDialCode = '91';
+    let currentCountryCode = 'in';
 
-  if (toggle && header) {
-    function closeNav() {
-      if (header.classList.contains('nav-open')) {
-        header.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Open navigation');
-      }
-    }
-
-    toggle.addEventListener('click', function (e) {
+    selectedFlag.addEventListener('click', function (e) {
       e.stopPropagation();
-      var open = header.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      countryList.classList.toggle('iti__hide');
     });
 
-    header.querySelectorAll('.nav-links a').forEach(function (link) {
-      link.addEventListener('click', closeNav);
-    });
+    countryList.addEventListener('click', function (e) {
+      const item = e.target.closest('.iti__country');
+      if (!item) return;
+      e.stopPropagation();
+      const dialCode = item.getAttribute('data-dial-code') || '91';
+      const countryCode = item.getAttribute('data-country-code') || 'in';
+      currentDialCode = dialCode;
+      currentCountryCode = countryCode;
 
-    document.addEventListener('click', function (e) {
-      if (!header.contains(e.target)) closeNav();
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { closeNav(); toggle.focus(); }
-    });
-  }
-
-    var sections = document.querySelectorAll('section[id]');
-  var navLinks = document.querySelectorAll('.nav-links a');
-
-  if ('IntersectionObserver' in window && navLinks.length) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          navLinks.forEach(function (link) {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-          });
-        }
+      const flag = selectedFlag.querySelector('.iti__flag');
+      if (flag) {
+        flag.className = 'iti__flag iti__' + countryCode;
+      }
+      if (phoneInput) {
+        phoneInput.placeholder = '+' + dialCode + ' Phone Number';
+      }
+      countryList.querySelectorAll('.iti__country').forEach(function (el) {
+        el.classList.remove('iti__active');
       });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-
-    sections.forEach(function (s) { observer.observe(s); });
-  }
-
-    var radioCards = document.querySelectorAll('.product-radio-card');
-
-  function syncRadioCards() {
-    radioCards.forEach(function (card) {
-      var input = card.querySelector('input[type="radio"]');
-      card.classList.toggle('is-selected', !!(input && input.checked));
-    });
-  }
-
-  radioCards.forEach(function (card) {
-    card.addEventListener('click', function () {
-      var input = card.querySelector('input[type="radio"]');
-      if (input) {
-        input.checked = true;
-        syncRadioCards();
-      }
-    });
-  });
-
-  syncRadioCards();
-
-    document.querySelectorAll('[data-product]').forEach(function (cta) {
-    cta.addEventListener('click', function () {
-      var val = cta.getAttribute('data-product');
-      var radio = document.querySelector('input[name="product"][value="' + val + '"]');
-      if (radio) { radio.checked = true; syncRadioCards(); }
-    });
-  });
-
-    function markInvalid(field) {
-    field.style.borderColor = '#c0392b';
-    field.style.boxShadow  = '0 0 0 3px rgba(192, 57, 43, 0.12)';
-  }
-  function clearInvalid(field) {
-    field.style.borderColor = '';
-    field.style.boxShadow  = '';
-  }
-  function isValidEmail(val) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-  }
-  function escHtml(str) {
-    var d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-  }
-
-    var eaForm    = document.getElementById('ea-form');
-  var eaSuccess = document.getElementById('ea-success');
-  var eaSummary = document.getElementById('ea-success-summary');
-
-  if (eaForm && eaSuccess) {
-    eaForm.querySelectorAll('input').forEach(function (inp) {
-      inp.addEventListener('input', function () { clearInvalid(inp); });
+      item.classList.add('iti__active');
+      countryList.classList.add('iti__hide');
     });
 
-    eaForm.addEventListener('submit', function (e) {
-      e.preventDefault();
+    document.addEventListener('click', function () {
+      if (countryList) countryList.classList.add('iti__hide');
+    });
 
-      var nameField    = eaForm.querySelector('#ea-name');
-      var companyField = eaForm.querySelector('#ea-company');
-      var emailField   = eaForm.querySelector('#ea-email');
-      var productInput = eaForm.querySelector('input[name="product"]:checked');
-      var firstBad     = null;
+    // form submission
+    if (submitBtn) {
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxct-MHARhNebNtI5AMk8D0mp4E7OSHhIrZvz0qDptDkjw2ohumnSlE-pSV-68Bbkk/exec';
 
-      [nameField, companyField, emailField].forEach(function (f) {
-        if (!f.value.trim()) {
-          markInvalid(f);
-          if (!firstBad) firstBad = f;
-        } else {
-          clearInvalid(f);
+      submitBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const nameInput = document.querySelector('#iyozi');
+        const emailInput = document.querySelector('#im3po');
+        const phoneInput = document.querySelector('#iuw4j');
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
+        const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+
+        if (!name) {
+          alert('Please enter your first name.');
+          if (nameInput) nameInput.focus();
+          return;
         }
-      });
 
-      if (emailField.value.trim() && !isValidEmail(emailField.value.trim())) {
-        markInvalid(emailField);
-        if (!firstBad) firstBad = emailField;
-      }
-
-      if (firstBad) { firstBad.focus(); return; }
-
-      var btn = eaForm.querySelector('button[type="submit"]');
-      if (btn) { btn.disabled = true; btn.textContent = 'Reserving your spot…'; }
-
-      var productLabels = { fieldhand: 'Fieldhand (Field Service)', inventorii: 'Inventorii (Warehouse & Distribution)', both: 'Both Products' };
-      var productLabel = productLabels[(productInput && productInput.value)] || 'Fieldhand (Field Service)';
-
-      if (eaSummary) {
-        eaSummary.innerHTML =
-          '<strong>Reservation confirmed:</strong><br>' +
-          '&bull; Name: '    + escHtml(nameField.value.trim())    + '<br>' +
-          '&bull; Company: ' + escHtml(companyField.value.trim()) + '<br>' +
-          '&bull; Email: '   + escHtml(emailField.value.trim())   + '<br>' +
-          '&bull; Product: ' + escHtml(productLabel)              + '<br>' +
-          '&bull; Discount: 20% flat lifetime discount applied at launch';
-      }
-
-      setTimeout(function () {
-        var formEl = eaForm.closest('form') || eaForm;
-        formEl.hidden = true;
-        eaSuccess.hidden = false;
-        eaSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 400);
-    });
-  }
-
-  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxct-MHARhNebNtI5AMk8D0mp4E7OSHhIrZvz0qDptDkjw2ohumnSlE-pSV-68Bbkk/exec';
-
-  var contactForm    = document.getElementById('contact-form');
-  var contactSuccess = document.getElementById('contact-success');
-
-  if (contactForm && contactSuccess) {
-    contactForm.querySelectorAll('input, textarea').forEach(function (inp) {
-      inp.addEventListener('input', function () { clearInvalid(inp); });
-    });
-
-    contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var nameField    = contactForm.querySelector('#contact-name');
-      var emailField   = contactForm.querySelector('#contact-email');
-      var messageField = contactForm.querySelector('#contact-message');
-      var topicField   = contactForm.querySelector('#contact-topic');
-      var firstBad     = null;
-
-      [nameField, emailField, messageField].forEach(function (f) {
-        if (!f.value.trim()) {
-          markInvalid(f);
-          if (!firstBad) firstBad = f;
-        } else {
-          clearInvalid(f);
+        if (!email || email.indexOf('@') === -1) {
+          alert('Please enter a valid email address.');
+          if (emailInput) emailInput.focus();
+          return;
         }
-      });
 
-      if (emailField.value.trim() && !isValidEmail(emailField.value.trim())) {
-        markInvalid(emailField);
-        if (!firstBad) firstBad = emailField;
-      }
+        if (!rawPhone) {
+          alert('Please enter your phone number.');
+          if (phoneInput) phoneInput.focus();
+          return;
+        }
 
-      if (firstBad) { firstBad.focus(); return; }
+        const btnTxt = submitBtn.querySelector('.ffbtnmaintxt');
+        if (btnTxt) {
+          btnTxt.textContent = 'Submitting...';
+        }
+        submitBtn.style.pointerEvents = 'none';
+        submitBtn.style.opacity = '0.75';
 
-      var btn = contactForm.querySelector('button[type="submit"]');
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        const formattedPhone = rawPhone.startsWith('+') ? rawPhone : ('+' + currentDialCode + ' ' + rawPhone);
 
-      if (GOOGLE_SCRIPT_URL) {
-        var formData = new FormData(contactForm);
-        formData.append('timestamp', new Date().toLocaleString());
+        // spreadsheet data
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('first_name', name);
+        formData.append('email', email);
+        formData.append('phone', formattedPhone);
+        formData.append('dial_code', '+' + currentDialCode);
+        formData.append('country', currentCountryCode.toUpperCase());
+        formData.append('source', 'Simnosoft Free Audit Form');
         formData.append('sheet_name', 'Sheet2');
-        formData.append('source', 'Simnosoft Contact Form');
+        formData.append('timestamp', new Date().toLocaleString());
 
-        fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          body: formData,
-          mode: 'no-cors'
-        })
-        .then(function () {
-          contactForm.hidden = true;
-          contactSuccess.hidden = false;
-          contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        })
-        .catch(function () {
-          contactForm.hidden = true;
-          contactSuccess.hidden = false;
-          contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-      } else {
-        contactForm.hidden = true;
-        contactSuccess.hidden = false;
-        contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
+        function showSuccess() {
+          if (form) form.style.display = 'none';
+          if (successMsg) {
+            successMsg.style.display = 'block';
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+
+        if (GOOGLE_SCRIPT_URL) {
+          fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+          })
+          .then(function () {
+            showSuccess();
+          })
+          .catch(function (err) {
+            console.warn('Submission request note:', err);
+            showSuccess();
+          });
+        } else {
+          setTimeout(showSuccess, 400);
+        }
+      });
+    }
   }
-
-    document.querySelectorAll('.faq-item summary').forEach(function (s) {
-    s.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        s.parentElement.toggleAttribute('open');
-      }
-    });
-  });
-
-  /* --------------------------------------------------------------------------
-     Fieldhand Early Access Modal (Triggers after 3 seconds)
-     -------------------------------------------------------------------------- */
-  var eaPopup = document.getElementById('fieldhand-popup');
-  var eaPopupClose = document.getElementById('popup-close-btn');
-  var eaPopupBackdrop = document.getElementById('popup-backdrop');
-  var eaPopupDismiss = document.getElementById('popup-dismiss-link');
-
-  if (eaPopup) {
-    function openEaPopup() {
-      eaPopup.classList.add('is-visible');
-      eaPopup.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeEaPopup() {
-      eaPopup.classList.remove('is-visible');
-      eaPopup.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    // Expose globally for quick testing or manual opening if needed
-    window.openFieldhandModal = openEaPopup;
-    window.closeFieldhandModal = closeEaPopup;
-
-    // Clear any previous session suppression
-    try {
-      sessionStorage.removeItem('fieldhand_popup_dismissed');
-      sessionStorage.removeItem('simnosoft_fieldhand_popup_closed');
-    } catch (e) {}
-
-    // Trigger modal after 3 seconds (3000ms)
-    setTimeout(openEaPopup, 3000);
-
-    if (eaPopupClose) {
-      eaPopupClose.addEventListener('click', function (e) {
-        e.preventDefault();
-        closeEaPopup();
-      });
-    }
-
-    if (eaPopupBackdrop) {
-      eaPopupBackdrop.addEventListener('click', function () {
-        closeEaPopup();
-      });
-    }
-
-    if (eaPopupDismiss) {
-      eaPopupDismiss.addEventListener('click', function (e) {
-        e.preventDefault();
-        closeEaPopup();
-      });
-    }
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && eaPopup.classList.contains('is-visible')) {
-        closeEaPopup();
-      }
-    });
-  }
-
-})();
-
+});
