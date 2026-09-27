@@ -2382,8 +2382,10 @@ body {
     padding: 0;
   }
   #i8k87 {
-    font-size: 41px !important;
+    font-size: 38px !important;
     line-height: 1.12;
+    letter-spacing: -0.05em;
+
   }
   #i8k87 .highlight {
     text-decoration-thickness: 4px;
