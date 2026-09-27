@@ -1656,7 +1656,7 @@ body {
 #ikfdy {
   width: 129px;
   max-width: 60%;
-  margin: 2px auto 4px;
+  margin: 2px auto 1px;
   display: inline-block;
 }
 
@@ -1976,7 +1976,7 @@ body {
   #ikfdy {
     width: 130px;
     max-width: 50%;
-    margin: 0 auto;
+    margin: 2px auto 0;
     display: inline-block;
   }
 
@@ -2376,7 +2376,7 @@ body {
   #ikfdy {
     width: 104px;
     max-width: 50%;
-    margin: 0 auto 2px;
+    margin: 2px auto 0px;
   }
   .flexi-vform-box {
     padding: 0;
@@ -2423,7 +2423,7 @@ body {
     #ikfdy {
     width: 104px;
     max-width: 50%;
-    margin: 0 auto 2px;
+    margin: 2px auto 0px;
     }
     .flexi-vform-box {
         padding: 0;
